@@ -1,0 +1,25 @@
+queue:
+  name: Hosted Ubuntu 1604
+  demands:
+    - ruby
+    - npm
+
+steps:
+- task: Docker@0
+  displayName: 'Build an image'
+  inputs:
+    azureSubscription: '(22b2a80f-4c0e-40ed-b7de-a07e40e8f9ea)'
+    azureContainerRegistry: '(ZYX.azurecr.io)'
+    dockerFile: 'Dockerfile'
+    imageName: 'design-system:$(Build.BuildNumber)'
+    includeLatestTag: true
+    includeSourceTags: true
+
+- task: Docker@0
+  displayName: 'Push an image'
+  inputs:
+    azureSubscription: '(22b2a80f-4c0e-40ed-b7de-a07e40e8f9ea)'
+    azureContainerRegistry: '(ZYX.azurecr.io)'
+    action: 'Push an image'
+    imageName: 'design-system:$(Build.BuildNumber)'
+    includeLatestTag: true
